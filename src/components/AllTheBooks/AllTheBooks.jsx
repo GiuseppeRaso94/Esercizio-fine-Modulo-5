@@ -29,6 +29,7 @@ const AllTheBooks = () => {
                                 title={book.title}
                                 price={book.price}
                                 img={book.img}
+                                category={book.category}
                             />
                         </div>
                     </Col>

@@ -10,6 +10,7 @@ const SingleBook = (book) => {
                 <Card.Title className="px-3">{book.title}</Card.Title>
                 <Card.Text className="px-3">{book.price + ' $'}</Card.Text>
                 <Card.Text className="px-3">{book.asin}</Card.Text>
+                <Card.Text className="px-3">{book.category}</Card.Text>
                 <Link
                     to={`/book-details/${book.asin}`}
                     className="text-decoration-none"
