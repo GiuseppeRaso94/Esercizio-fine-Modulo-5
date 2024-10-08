@@ -13,6 +13,7 @@ const SingleComment = ({ review, handleDeleteReview }) => {
                                 color={'#de7921'}
                                 height="24px"
                                 width="24px"
+                                role="star"
                             />
                         )
                     })}

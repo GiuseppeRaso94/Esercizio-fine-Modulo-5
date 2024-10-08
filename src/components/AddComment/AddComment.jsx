@@ -40,7 +40,7 @@ const AddComment = (props) => {
                 min="1"
                 max="5"
                 value={comment.rate}
-                placeholder="Type your rating from 1 to 5"
+                placeholder="Rate 1-5"
                 onChange={(e) => {
                     setComment({ ...comment, rate: `${e.target.value}` })
                 }}

@@ -21,6 +21,7 @@ function BookDetails() {
                                 <Card
                                     className="border border-0 h-100 mb-3"
                                     id="singlebook"
+                                    key={bookId}
                                 >
                                     <Card.Img variant="top" src={book.img} />
                                     <Card.Body>

@@ -26,7 +26,7 @@ const MyNav = () => {
                         </Nav.Link>
                         <input
                             type="text"
-                            placeholder="Type here to search the title of the book"
+                            placeholder="Search the book"
                             className="ms-3 w-50 p-2"
                             onChange={(e) => setTextToSearch(e.target.value)}
                         ></input>

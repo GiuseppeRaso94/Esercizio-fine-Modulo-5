@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import fantasy from '../../data/fantasy.json'
 import { BookContextProvider } from '../context/BookContext'
@@ -21,8 +21,29 @@ describe('Test AllTheBooks Component', () => {
                 </BookContextProvider>
             </MemoryRouter>
         )
-        const classNameToSearch = 'fantasy'
-        const cardsNumber = getAllByText(classNameToSearch).length
+        const categoryToSearch = 'Genre: fantasy'
+        const cardsNumber = getAllByText(categoryToSearch).length
         expect(cardsNumber === fantasy.length).toBe(true)
+    })
+    it('check the number of the cards rendered after the search in the navbar', () => {
+        const { getByPlaceholderText, getAllByRole } = render(
+            <MemoryRouter>
+                <BookContextProvider>
+                    <NavAndFootLayout>
+                        <Main classname={'py-3'}>
+                            <Welcome />
+                            <AllTheBooks />
+                        </Main>
+                    </NavAndFootLayout>
+                </BookContextProvider>
+            </MemoryRouter>
+        )
+        const searchBar = getByPlaceholderText('Search the book')
+        fireEvent.change(searchBar, { target: { value: 'Destiny' } })
+        const cardsFoundInJson = fantasy.filter((book) =>
+            book.title?.toUpperCase().includes(searchBar.value.toUpperCase())
+        ).length
+        const cardsFoundInDom = getAllByRole('card').length
+        expect(cardsFoundInJson === cardsFoundInDom).toBe(true)
     })
 })
