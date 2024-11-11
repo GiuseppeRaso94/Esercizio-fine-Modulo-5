@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import AddComment from '../AddComment/AddComment'
 import CommentList from '../CommentList/CommentList'
 
-const CommentArea = ({ asin }) => {
+const CommentArea = () => {
     const [comments, setComments] = useState([])
     const { bookId } = useParams()
     useEffect(() => {
@@ -28,7 +28,7 @@ const CommentArea = ({ asin }) => {
     return (
         <>
             <CommentList deleteComment={deleteComment} reviews={comments} />
-            <AddComment addComment={addComment} asin={bookId} />
+            <AddComment addComment={addComment} bookId={bookId} />
         </>
     )
 }

@@ -9,13 +9,19 @@ const MyNav = () => {
     return (
         <Navbar expand="lg" className="bg-dark">
             <Container fluid>
-                <Navbar.Brand href="#" className="mx-5 fs-5 text-white">
+                <Navbar.Brand
+                    href="http://localhost:5173/"
+                    className="mx-5 fs-5 text-white"
+                >
                     Epi.Books
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="d-flex align-items-center w-100">
-                        <Nav.Link href="#" className="text-white">
+                        <Nav.Link
+                            href="http://localhost:5173/"
+                            className="text-white"
+                        >
                             Home
                         </Nav.Link>
                         <Nav.Link href="#" className="text-white">

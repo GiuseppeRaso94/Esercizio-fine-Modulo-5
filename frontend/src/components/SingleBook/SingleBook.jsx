@@ -15,7 +15,7 @@ const SingleBook = (book) => {
                 <Card.Text className="px-3">{book.asin}</Card.Text>
                 <Card.Text className="px-3">{`Genre: ${book.category}`}</Card.Text>
                 <Link
-                    to={`/book-details/${book.asin}`}
+                    to={`/book-details/${book._id}`}
                     className="text-decoration-none"
                 >
                     <Button className="btn btn-info w-100">Details</Button>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import API_TOKEN from '../../data/api_token'
 
 const AddComment = (props) => {
-    const [comment, setComment] = useState({ elementId: props.asin })
+    const [comment, setComment] = useState({ elementId: props.bookId })
     function handleOnSubmit(e) {
         e.preventDefault()
         fetch(`https://striveschool-api.herokuapp.com/api/comments`, {
@@ -34,17 +34,19 @@ const AddComment = (props) => {
                     setComment({ ...comment, comment: `${e.target.value}` })
                 }
             ></textarea>
-            <input
+            <p className="text-white m-0">Rate the book from 1 to 5</p>
+            <select
                 className="w-100 h-100 p-2"
-                type="number"
-                min="1"
-                max="5"
-                value={comment.rate}
-                placeholder="Rate 1-5"
                 onChange={(e) => {
                     setComment({ ...comment, rate: `${e.target.value}` })
                 }}
-            ></input>
+            >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
             <button className="btn btn-info" type="submit">
                 Save Review
             </button>
