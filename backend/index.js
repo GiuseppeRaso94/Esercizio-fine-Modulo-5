@@ -5,7 +5,7 @@ require("dotenv").config();
 const booksRoute = require("./routes/books");
 const commentsRoute = require("./routes/comments");
 
-const PORT = process.env.DB_PORT;
+const PORT = process.env.BE_PORT;
 const server = express();
 server.use(express.json());
 server.use(cors());

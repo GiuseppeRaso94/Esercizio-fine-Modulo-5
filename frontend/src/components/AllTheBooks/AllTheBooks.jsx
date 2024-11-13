@@ -5,12 +5,11 @@ import { BookContext } from '../context/BookContext'
 
 const AllTheBooks = () => {
     const [books, setBooks] = useState([])
-    const { textToSearch, bookSelected, setBookSelected } =
-        useContext(BookContext)
+    const { textToSearch } = useContext(BookContext)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        fetch('http://localhost:4050/books')
+        fetch(`${process.env.BE_URL}/books`)
             .then((res) => res.json())
             .then((data) => {
                 setBooks(data.books)
@@ -28,21 +27,14 @@ const AllTheBooks = () => {
                     )
                     .map((book) => (
                         <Col md={6} lg={4} key={book.asin} className="mb-3">
-                            <div
-                                onClick={(e) => {
-                                    setBookSelected(book)
-                                }}
-                                className={`h-100`}
-                            >
-                                <SingleBook
-                                    asin={book.asin}
-                                    title={book.title}
-                                    price={book.price}
-                                    img={book.img}
-                                    category={book.category}
-                                    _id={book._id}
-                                />
-                            </div>
+                            <SingleBook
+                                asin={book.asin}
+                                title={book.title}
+                                price={book.price}
+                                img={book.img}
+                                category={book.category}
+                                _id={book._id}
+                            />
                         </Col>
                     ))
             ) : (

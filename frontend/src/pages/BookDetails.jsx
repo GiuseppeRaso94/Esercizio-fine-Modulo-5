@@ -3,21 +3,24 @@ import { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import CommentArea from '../components/CommentArea/CommentArea'
-import { BookContextProvider } from '../components/context/BookContext'
 import NavAndFootLayout from '../components/Layouts/NavAndFootLayout'
 import Main from '../components/Main/Main'
+import { BookContextProvider } from '../components/context/BookContext'
 function BookDetails() {
     const [book, setBook] = useState(undefined)
     const { bookId } = useParams()
     const [isLoading, setIsLoading] = useState(true)
-
-    useEffect(() => {
-        fetch('http://localhost:4050/books/' + bookId)
+    const fetchBook = () => {
+        setIsLoading(true)
+        fetch(`${process.env.BE_URL}/books/` + bookId)
             .then((res) => res.json())
             .then((data) => {
                 setBook(data.book)
                 setIsLoading(false)
             })
+    }
+    useEffect(() => {
+        fetchBook()
     }, [])
     return (
         <>
@@ -44,7 +47,10 @@ function BookDetails() {
                                 Caricamento in corso...
                             </div>
                         )}
-                        <CommentArea />
+                        <CommentArea
+                            fetchBook={fetchBook}
+                            comments={book?.comments || []}
+                        />
                     </Main>
                 </NavAndFootLayout>
             </BookContextProvider>
