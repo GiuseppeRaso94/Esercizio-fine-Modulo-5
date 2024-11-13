@@ -19,7 +19,7 @@ const AddComment = (props) => {
             rate: 1,
             comment: '',
         })
-        props.fetchBook()
+        props.getBook()
     }
 
     function handleOnSubmit(e) {

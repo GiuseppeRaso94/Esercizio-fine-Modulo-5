@@ -6,7 +6,7 @@ const SingleComment = (props) => {
         fetch(`${process.env.BE_URL}/comments/delete/${commentId}`, {
             method: 'DELETE',
         }).then(() => {
-            props.fetchBook()
+            props.getBook()
             Swal.fire({
                 position: 'center',
                 icon: 'success',

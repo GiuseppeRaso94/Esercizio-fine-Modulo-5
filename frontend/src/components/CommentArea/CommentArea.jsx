@@ -4,11 +4,8 @@ import CommentList from '../CommentList/CommentList'
 const CommentArea = (props) => {
     return (
         <>
-            <CommentList
-                fetchBook={props.fetchBook}
-                comments={props.comments}
-            />
-            <AddComment fetchBook={props.fetchBook} comments={props.comments} />
+            <CommentList getBook={props.getBook} comments={props.comments} />
+            <AddComment getBook={props.getBook} comments={props.comments} />
         </>
     )
 }

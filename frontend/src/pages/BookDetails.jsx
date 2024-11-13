@@ -10,7 +10,7 @@ function BookDetails() {
     const [book, setBook] = useState(undefined)
     const { bookId } = useParams()
     const [isLoading, setIsLoading] = useState(true)
-    const fetchBook = () => {
+    const getBook = () => {
         setIsLoading(true)
         fetch(`${process.env.BE_URL}/books/` + bookId)
             .then((res) => res.json())
@@ -20,7 +20,7 @@ function BookDetails() {
             })
     }
     useEffect(() => {
-        fetchBook()
+        getBook()
     }, [])
     return (
         <>
@@ -48,7 +48,7 @@ function BookDetails() {
                             </div>
                         )}
                         <CommentArea
-                            fetchBook={fetchBook}
+                            getBook={getBook}
                             comments={book?.comments || []}
                         />
                     </Main>

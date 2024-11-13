@@ -6,7 +6,7 @@ const CommentList = (props) => {
                 return (
                     <SingleComment
                         key={i}
-                        fetchBook={props.fetchBook}
+                        getBook={props.getBook}
                         comment={comment}
                     />
                 )

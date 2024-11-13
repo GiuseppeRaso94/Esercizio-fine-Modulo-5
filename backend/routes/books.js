@@ -3,12 +3,26 @@ const BooksModel = require("../models/BooksModel");
 const books = express.Router();
 
 books.get("/books", async (request, response) => {
+  const { page, pageSize = 7 } = request.query;
   try {
-    const books = await BooksModel.find().populate("comments");
+    const books = await BooksModel.find()
+      .sort({ title: 1 })
+      .limit(pageSize)
+      .skip((page - 1) * pageSize)
+      .populate("comments");
+
+    const totalBooks = await BooksModel.countDocuments();
+    const totalPages = Math.ceil(totalBooks / pageSize);
+
     if (books.length === 0) {
       return response.status(404).send({ message: "No books found" });
     }
-    response.status(200).send({ statusCode: 200, books });
+    response.status(200).send({
+      statusCode: 200,
+      totalPages: totalPages,
+      count: totalBooks,
+      books,
+    });
   } catch (e) {
     response.status(500).send({ message: e.message });
   }
