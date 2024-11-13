@@ -1,24 +1,51 @@
 import { useState } from 'react'
-import API_TOKEN from '../../data/api_token'
-
+import { useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 const AddComment = (props) => {
-    const [comment, setComment] = useState({ elementId: props.bookId })
+    const { bookId } = useParams()
+    const [comment, setComment] = useState({
+        commentAuthor: 'Giuseppe',
+        book: bookId,
+        rate: 1,
+        comment: '',
+    })
+
+    function reset() {
+        document.getElementById('commentTextArea').value = ''
+        document.getElementById('rateSelect').value = 1
+        setComment({
+            commentAuthor: 'Giuseppe',
+            book: bookId,
+            rate: 1,
+            comment: '',
+        })
+        props.fetchBook()
+    }
+
     function handleOnSubmit(e) {
         e.preventDefault()
-        fetch(`https://striveschool-api.herokuapp.com/api/comments`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${API_TOKEN}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(comment),
-        })
-            .then((response) => response.json())
-            .then((review) => {
-                props.addComment(review)
-                comment.comment = ''
-                comment.rate = ''
+        if (comment.comment) {
+            fetch(`${process.env.BE_URL}/comments/create`, {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(comment),
+            }).then(() => {
+                reset()
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Your comment has been saved',
+                    showConfirmButton: false,
+                    timer: 1500,
+                })
             })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Something is missing!',
+                text: 'Please enter a comment before submit the form',
+            })
+        }
     }
 
     return (
@@ -29,7 +56,7 @@ const AddComment = (props) => {
             <textarea
                 className="w-100 p-2"
                 placeholder="Type your review here"
-                value={comment.comment}
+                id="commentTextArea"
                 onChange={(e) =>
                     setComment({ ...comment, comment: `${e.target.value}` })
                 }
@@ -37,8 +64,12 @@ const AddComment = (props) => {
             <p className="text-white m-0">Rate the book from 1 to 5</p>
             <select
                 className="w-100 h-100 p-2"
+                id="rateSelect"
                 onChange={(e) => {
-                    setComment({ ...comment, rate: `${e.target.value}` })
+                    setComment({
+                        ...comment,
+                        rate: `${e.target.value}`,
+                    })
                 }}
             >
                 <option value="1">1</option>
@@ -47,7 +78,11 @@ const AddComment = (props) => {
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
-            <button className="btn btn-info" type="submit">
+            <button
+                className="btn btn-info"
+                type="submit"
+                onClick={(e) => handleOnSubmit(e)}
+            >
                 Save Review
             </button>
         </form>

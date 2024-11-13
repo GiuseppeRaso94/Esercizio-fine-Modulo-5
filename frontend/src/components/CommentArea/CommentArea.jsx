@@ -1,34 +1,14 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import AddComment from '../AddComment/AddComment'
 import CommentList from '../CommentList/CommentList'
 
-const CommentArea = () => {
-    const [comments, setComments] = useState([])
-    const { bookId } = useParams()
-    useEffect(() => {
-        fetch(
-            `https://striveschool-api.herokuapp.com/api/books/${bookId}/comments/`
-        )
-            .then((response) => response.json())
-            .then((comments) => {
-                setComments(comments)
-            })
-    }, [])
-
-    function addComment(comment) {
-        setComments([...comments, comment])
-    }
-
-    function deleteComment(commentToDelete) {
-        setComments(
-            comments.filter((comment) => comment._id !== commentToDelete._id)
-        )
-    }
+const CommentArea = (props) => {
     return (
         <>
-            <CommentList deleteComment={deleteComment} reviews={comments} />
-            <AddComment addComment={addComment} bookId={bookId} />
+            <CommentList
+                fetchBook={props.fetchBook}
+                comments={props.comments}
+            />
+            <AddComment fetchBook={props.fetchBook} comments={props.comments} />
         </>
     )
 }

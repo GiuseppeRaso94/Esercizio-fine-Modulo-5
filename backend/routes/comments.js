@@ -1,10 +1,11 @@
 const express = require("express");
 const CommentsModel = require("../models/CommentsModel");
+const BooksModel = require("../models/BooksModel");
 const comments = express.Router();
 
 comments.get("/comments", async (request, response) => {
   try {
-    const comments = await CommentsModel.find();
+    const comments = await CommentsModel.find().populate("book");
     if (comments.length === 0) {
       return response.status(404).send({ message: "No comments found" });
     }
@@ -16,7 +17,9 @@ comments.get("/comments", async (request, response) => {
 
 comments.get("/comments/:id", async (request, response) => {
   try {
-    const comment = await CommentsModel.findById(request.params.id);
+    const comment = await CommentsModel.findById(request.params.id).populate(
+      "book"
+    );
     if (!comment) {
       return response.status(404).send({ message: "No comments found" });
     }
@@ -27,13 +30,17 @@ comments.get("/comments/:id", async (request, response) => {
 });
 
 comments.post("/comments/create", async (request, response) => {
-  const newComment = new CommentsModel({
-    comment: request.body.comment,
-    rate: Number(request.body.rate),
-    commentAuthor: request.body.commentAuthor,
-  });
+  const { rate, comment, commentAuthor, book } = request.body;
   try {
+    const { _id } = await BooksModel.findById(book);
+    const newComment = new CommentsModel({
+      comment,
+      rate,
+      commentAuthor,
+      book: _id,
+    });
     const savedComment = await newComment.save();
+    await BooksModel.updateOne({ _id }, { $push: { comments: savedComment } });
     response.status(201).send({
       statusCode: 201,
       message: "Comment saved successfully",
@@ -81,6 +88,10 @@ comments.delete("/comments/delete/:commentId", async (request, response) => {
     });
   }
   try {
+    await BooksModel.updateOne(
+      { _id: deletedComment.book },
+      { $pull: { comments: commentId } }
+    );
     response.status(200).send({
       statusCode: 200,
       message: "Comment with the given id successfully deleted",

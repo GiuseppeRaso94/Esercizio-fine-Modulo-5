@@ -24,6 +24,12 @@ const BookSchema = new mongoose.Schema(
       required: true,
     },
     author: { type: String, required: false, default: undefined },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "commentsModel",
+      },
+    ],
   },
   { timestamps: true, strict: true }
 );
