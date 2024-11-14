@@ -1,15 +1,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import BookDetails from './pages/BookDetails'
-import HomePage from './pages/HomePage'
-import NotFoundPage from './pages/NotFoundPage'
+import ProtectedRoutes from './middlewares/ProtectedRoutes.jsx'
+import BookDetails from './pages/BookDetails.jsx'
+import HomePage from './pages/HomePage.jsx'
+import Login from './pages/Login.jsx'
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route exact path="/" element={<HomePage />} />
-                <Route path="/book-details/:bookId" element={<BookDetails />} />
-                <Route path="*" element={<NotFoundPage />} />
+                <Route exact path="/" element={<Login />} />
+                <Route element={<ProtectedRoutes />}>
+                    <Route path="/homepage" element={<HomePage />} />
+                    <Route
+                        path="/book-details/:bookId"
+                        element={<BookDetails />}
+                    />
+                </Route>
+                <Route path="*" element={<Login />} />
             </Routes>
         </BrowserRouter>
     )

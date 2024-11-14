@@ -10,7 +10,7 @@ const MyNav = () => {
         <Navbar expand="lg" className="bg-dark">
             <Container fluid>
                 <Navbar.Brand
-                    href="http://localhost:5173"
+                    href="http://localhost:5173/homepage"
                     className="mx-5 fs-5 text-white"
                 >
                     Epi.Books
@@ -19,7 +19,7 @@ const MyNav = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="d-flex align-items-center w-100">
                         <Nav.Link
-                            href="http://localhost:5173"
+                            href="http://localhost:5173/homepage"
                             className="text-white"
                         >
                             Home
