@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 const AddComment = (props) => {
+    const currentUser = JSON.parse(localStorage.getItem('user'))
     const { bookId } = useParams()
     const [comment, setComment] = useState({
-        commentAuthor: 'Giuseppe',
+        commentAuthor: currentUser,
         book: bookId,
         rate: 1,
         comment: '',
@@ -14,7 +15,7 @@ const AddComment = (props) => {
         document.getElementById('commentTextArea').value = ''
         document.getElementById('rateSelect').value = 1
         setComment({
-            commentAuthor: 'Giuseppe',
+            commentAuthor: currentUser,
             book: bookId,
             rate: 1,
             comment: '',

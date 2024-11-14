@@ -2,6 +2,19 @@ import React, { useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
+// Commento al prof.: specifico delle istruzioni visto che putroppo per mancanza di tempo non sono riuscito
+// a svolgere molto di tutte le funzionalitá affrontate nel programma di studio in questo modulo.
+// Riassumo cosa é stato aggiunto dal vecchio modulo ad ora visto che il frontend é lo stesso:
+
+// trasferiti i dati dei libri (importati, perché non vi é la possibilitá di crearli tramite l'app) e commenti sul db in cloud e le relative chiamate api tramite il
+// backend, fatte le dovute referenziazioni, implementata la pagination nella home ed aggiunta la pagina di login con l'autenticazione e la generazione del token
+
+// Cosa non é stato fatto:
+// non vi é una pagina di registrazione perció é possibile creare uno user solo da PostMan, non c'é una sezione dedicata alla creazione/upload dei libri per gli utenti
+// autori, non c'é un login tramite oAuth, non é stato deployato il sito.
+
+// Manca molto per cui spero di recuperare se possibile.
+
 const Login = () => {
     const [loginData, setLoginData] = useState({})
 
@@ -26,6 +39,7 @@ const Login = () => {
             const data = await response.json()
             if (response.ok) {
                 localStorage.setItem('auth', JSON.stringify(data.token))
+                localStorage.setItem('user', JSON.stringify(loginData.email))
                 navigate('/homepage', { replace: true })
             }
             return response

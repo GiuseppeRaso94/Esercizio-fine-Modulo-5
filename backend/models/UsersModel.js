@@ -1,5 +1,3 @@
-//   const salt = await bcrypt.genSalt(10);
-//   const hashedPassword = bcrypt.hash(request.body.password,salt);
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
